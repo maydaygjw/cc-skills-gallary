@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:marp.app)",
+      "WebSearch",
+      "Bash(git clone:*)",
+      "Bash(del test-basic.md test-tech.md sample-output.md test-custom.md)",
+      "Bash(npm install -g @marp-team/marp-cli:*)",
+      "Bash(marp:*)"
+    ]
+  }
+}
