@@ -1,0 +1,29 @@
+# Universal DB Query Skill 配置文件
+# 将此文件复制到项目根目录的 .claude/db-config.yaml
+
+# 数据库连接配置
+database:
+  # MCP 服务器名称（在 Claude Code settings 中配置的 MCP server 名称）
+  mcp_server: DBHub
+
+  # 数据库名 / Schema 名
+  # 示例: newmall, production, myapp_db
+  schema: your_database_name
+
+# Skill 行为配置（可选）
+options:
+  # 启用 Schema 缓存（推荐开启，加快后续查询）
+  cache_enabled: true
+
+  # 缓存有效期（小时）
+  cache_ttl_hours: 24
+
+  # 最大返回行数（防止大表全表扫描）
+  max_query_results: 1000
+
+  # 只读模式（推荐开启，防止误操作）
+  # 开启后只允许 SELECT/SHOW/DESCRIBE/EXPLAIN
+  readonly_mode: true
+
+  # 枚举值采样行数（用于推断字段可能的取值）
+  sample_size: 100
