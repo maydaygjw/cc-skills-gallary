@@ -8,7 +8,7 @@
 
 ### 1. 配置数据库连接
 
-在项目根目录创建 `.claude/db-config.yaml`：
+在项目根目录创建 `.claude/skills-conf/udq/config.yaml`：
 
 ```yaml
 database:
@@ -36,7 +36,7 @@ options:
 ```
 用户提问涉及数据库
     ↓
-读取 .claude/db-config.yaml
+读取 .claude/skills-conf/udq/config.yaml
     ↓
 配置不存在 → 引导用户创建（交互式）
 配置存在   → 继续
@@ -104,7 +104,7 @@ SQL: |
 **Step 5: 保存缓存**
 
 ```yaml
-位置: .claude/.cache/db-schema.json
+位置: .claude/skills-conf/udq/.cache/schema.json
 格式:
   database: string
   discovered_at: ISO8601
@@ -130,7 +130,7 @@ SQL: |
 | "今天/昨天/本周的xx" | 时间过滤查询 | 识别时间字段，生成日期过滤 |
 | "待付款/已完成/取消的xx" | 状态过滤查询 | 从注释解析状态值，生成 WHERE 条件 |
 | "最新的xx" / "最近的xx" | 排序限制查询 | ORDER BY 时间字段 DESC LIMIT |
-| "运行xx报表" / "执行xx模板" | 本地模板 | 加载 .claude/db-patterns/ 下的 SQL 文件 |
+| "运行xx报表" / "执行xx模板" | 本地模板 | 加载 .claude/skills-conf/udq/patterns/ 下的 SQL 文件 |
 
 ### SQL 生成规则
 
@@ -172,7 +172,7 @@ SQL: |
 
 ### 模板目录
 
-`.claude/db-patterns/*.sql`
+`.claude/skills-conf/udq/patterns/*.sql`
 
 ### 模板格式
 
@@ -192,7 +192,7 @@ WHERE field = :param_name;
 ```
 用户: "运行每日报表"
     ↓
-扫描 .claude/db-patterns/*.sql
+扫描 .claude/skills-conf/udq/patterns/*.sql
     ↓
 匹配 @name 包含 "每日" 或 "报表"
     ↓
@@ -321,7 +321,7 @@ AI：执行中...
 
 ```
 用户：查询订单
-AI：未找到数据库配置。请创建 .claude/db-config.yaml：
+AI：未找到数据库配置。请创建 .claude/skills-conf/udq/config.yaml：
 
      database:
        mcp_server: DBHub

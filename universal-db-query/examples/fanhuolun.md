@@ -2,7 +2,7 @@
 
 ## 项目配置
 
-### db-config.yaml
+### config.yaml
 
 ```yaml
 database:
@@ -142,7 +142,7 @@ Claude：SELECT id, order_id, name, money, state, time
 
 ## 项目本地模板
 
-### .claude/db-patterns/daily-report.sql
+### .claude/skills-conf/udq/patterns/daily-report.sql
 
 ```sql
 -- @name: 每日订单报表
@@ -161,7 +161,7 @@ WHERE DATE(time) = COALESCE(:date, CURDATE())
   AND type IN (1, 2);
 ```
 
-### .claude/db-patterns/store-revenue.sql
+### .claude/skills-conf/udq/patterns/store-revenue.sql
 
 ```sql
 -- @name: 门店营收统计

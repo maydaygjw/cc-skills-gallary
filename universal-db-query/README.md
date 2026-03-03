@@ -121,7 +121,7 @@
 
 ### 2. 配置 Skill
 
-在项目根目录创建 `.claude/db-config.yaml`：
+在项目根目录创建 `.claude/skills-conf/udq/config.yaml`：
 
 ```yaml
 database:
@@ -150,8 +150,8 @@ universal-db-query/
 ├── SKILL.md                 # 主技能文件（核心逻辑）
 ├── README.md                # 本文件
 ├── templates/               # 配置模板
-│   ├── db-config.yaml       # 配置文件模板
-│   └── db-patterns/         # SQL 模板示例
+│   ├── config.yaml          # 配置文件模板
+│   └── patterns/            # SQL 模板示例
 │       ├── README.md
 │       ├── daily-report.sql
 │       └── recent-orders.sql
@@ -161,7 +161,7 @@ universal-db-query/
 
 ## 本地查询模板
 
-可以在项目根目录创建 `.claude/db-patterns/` 存放自定义 SQL 模板：
+可以在项目根目录创建 `.claude/skills-conf/udq/patterns/` 存放自定义 SQL 模板：
 
 ```sql
 -- @name: 每日订单统计
@@ -182,14 +182,14 @@ WHERE DATE(created_at) = COALESCE(:date, CURDATE());
 
 ## 工作原理
 
-1. **初始化** - 读取 `.claude/db-config.yaml` 获取配置
+1. **初始化** - 读取 `.claude/skills-conf/udq/config.yaml` 获取配置
 2. **元数据发现** - 使用 DBHub MCP 工具查询数据库结构
    - 表列表（`SHOW TABLES` / `information_schema.tables`）
    - 字段详情（`information_schema.columns`）
    - 外键关系（`information_schema.key_column_usage`）
 3. **业务推断** - 解析字段注释中的枚举值
    - 支持格式：`1:值1 2:值2`, `1.值1 2.值2`, `1-值1 2-值2`
-4. **缓存** - 元数据缓存到 `.claude/.cache/db-schema.json`
+4. **缓存** - 元数据缓存到 `.claude/skills-conf/udq/.cache/schema.json`
 5. **查询生成** - 根据用户意图生成 SQL 并执行
 
 ## 故障排除
@@ -206,7 +206,7 @@ WHERE DATE(created_at) = COALESCE(:date, CURDATE());
 ### 配置不存在
 
 ```
-未找到数据库配置。请创建 .claude/db-config.yaml
+未找到数据库配置。请创建 .claude/skills-conf/udq/config.yaml
 ```
 
 ### 元数据发现失败
