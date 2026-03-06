@@ -51,7 +51,7 @@
 
 ### 2. 配置 Skill
 
-在项目根目录创建 `.claude/skills-conf/udq/config.yaml`：
+在项目根目录创建 `./udq-config.yaml`：
 
 ```yaml
 database:
@@ -127,7 +127,7 @@ Claude：找到模板「每日订单报表」
 
 ## 本地查询模板
 
-在项目根目录创建 `.claude/skills-conf/udq/patterns/*.sql`：
+在项目根目录创建 `./udq-patterns/*.sql`：
 
 ```sql
 -- @name: 每日订单统计
@@ -163,7 +163,7 @@ universal-db-query/
 
 项目本地配置：
 ```
-.claude/skills-conf/udq/
+./
 ├── config.yaml              # 数据库配置
 ├── patterns/                # SQL 模板目录
 │   └── *.sql
@@ -173,10 +173,10 @@ universal-db-query/
 
 ## 工作原理
 
-1. **初始化** - 读取 `.claude/skills-conf/udq/config.yaml`
+1. **初始化** - 读取 `./udq-config.yaml`
 2. **元数据发现** - 使用 DBHub MCP 查询数据库结构
 3. **业务推断** - 解析字段注释中的枚举值
-4. **缓存** - 元数据缓存到 `.claude/skills-conf/udq/.cache/schema.json`
+4. **缓存** - 元数据缓存到 `./.udq-cache/schema.json`
 5. **查询生成** - 根据用户意图生成 SQL 并执行
 
 ## 故障排除
@@ -184,7 +184,7 @@ universal-db-query/
 | 问题 | 解决方案 |
 |-----|---------|
 | MCP 连接失败 | 检查 settings.json 中的 MCP 配置和数据库连接信息 |
-| 配置不存在 | 创建 `.claude/skills-conf/udq/config.yaml` |
+| 配置不存在 | 创建 `./udq-config.yaml` |
 | 元数据发现失败 | 检查数据库权限（需要读取 INFORMATION_SCHEMA），然后"刷新数据库缓存" |
 
 ## 参考

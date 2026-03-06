@@ -1,5 +1,5 @@
 # Universal DB Query Skill 配置文件
-# 将此文件复制到项目根目录的 .claude/db-config.yaml
+# 将此文件复制到项目根目录的 ./udq-config.yaml
 
 # 数据库连接配置
 database:
@@ -16,6 +16,7 @@ options:
   cache_enabled: true
 
   # 缓存有效期（小时）
+  # 设置为 0 表示缓存永久有效，除非用户手动刷新
   cache_ttl_hours: 24
 
   # 最大返回行数（防止大表全表扫描）
