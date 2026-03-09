@@ -1,0 +1,14 @@
+database:
+  type: sqlite
+  database: ./test-filter.db
+options:
+  cache_enabled: true
+  readonly_mode: true
+  max_query_results: 100
+  table_filter:
+    mode: whitelist
+    listed_tables:
+      - users
+      - orders
+    patterns:
+      - report_*

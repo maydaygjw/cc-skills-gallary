@@ -8,7 +8,14 @@
 
 ### 1. 配置数据库连接
 
-在项目根目录创建 `./udq-config.yaml`：
+配置文件查找优先级（从高到低）：
+
+1. 环境变量 `UDQ_CONFIG` 指定的路径
+2. 当前工作目录 `./udq-config.yaml`
+3. 用户主目录 `~/.udq-config.yaml`
+4. 技能目录 `<skill-path>/udq-config.yaml`
+
+创建配置文件：
 
 ```yaml
 database:
@@ -18,6 +25,8 @@ database:
 options:
   cache_enabled: true
   readonly_mode: true    # 推荐保持只读
+  cache_dir: ./.udq-cache  # 缓存目录（可选，默认 ./.udq-cache）
+  patterns_dir: ./udq-patterns  # 模板目录（可选，默认 ./udq-patterns）
 ```
 
 ### 2. 开始使用
@@ -36,12 +45,12 @@ options:
 ```
 用户提问涉及数据库
     ↓
-读取 ./udq-config.yaml
+按优先级查找配置文件
     ↓
 配置不存在 → 引导用户创建（交互式）
 配置存在   → 继续
     ↓
-检查 Schema 缓存
+检查 Schema 缓存（位置由配置决定）
     ↓
 缓存有效 → 使用缓存
 缓存缺失/过期 → 自动发现元数据并缓存
@@ -104,7 +113,7 @@ SQL: |
 **Step 5: 保存缓存**
 
 ```yaml
-位置: ./.udq-cache/schema.json
+位置: {config.options.cache_dir}/schema.json（默认 ./.udq-cache/schema.json）
 格式:
   database: string
   discovered_at: ISO8601
@@ -172,7 +181,12 @@ SQL: |
 
 ### 模板目录
 
-`./udq-patterns/*.sql`
+模板目录查找优先级（从高到低）：
+
+1. 配置文件中 `options.patterns_dir` 指定的路径
+2. 当前工作目录 `./udq-patterns/`
+3. 用户主目录 `~/.udq-patterns/`
+4. 技能目录 `<skill-path>/udq-patterns/`
 
 ### 模板格式
 

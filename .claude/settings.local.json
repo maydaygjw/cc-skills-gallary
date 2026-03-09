@@ -8,7 +8,10 @@
       "Bash(git clone:*)",
       "Bash(del test-basic.md test-tech.md sample-output.md test-custom.md)",
       "Bash(npm install -g @marp-team/marp-cli:*)",
-      "Bash(marp:*)"
+      "Bash(marp:*)",
+      "Bash(rm:*)",
+      "Bash(rsync:*)",
+      "Bash(npm install:*)"
     ]
   }
 }

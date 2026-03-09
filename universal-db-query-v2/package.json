@@ -1,0 +1,31 @@
+{
+  "name": "universal-db-query-v2",
+  "version": "2.0.0",
+  "description": "Standalone database query skill with direct connection support",
+  "main": "lib/db.js",
+  "scripts": {
+    "query": "node scripts/query.js",
+    "discover": "node scripts/discover-schema.js",
+    "tables": "node scripts/list-tables.js",
+    "describe": "node scripts/describe-table.js",
+    "pattern": "node scripts/run-pattern.js",
+    "validate": "node validate-skill.js"
+  },
+  "keywords": [
+    "database",
+    "sql",
+    "query",
+    "mysql",
+    "postgresql",
+    "sqlite",
+    "claude-skill"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "mysql2": "^3.9.0",
+    "pg": "^8.11.0",
+    "better-sqlite3": "^9.4.0",
+    "yaml": "^2.3.0"
+  }
+}

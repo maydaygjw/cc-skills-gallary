@@ -1,0 +1,857 @@
+{
+  "database": "hackox",
+  "type": "mysql",
+  "discovered_at": "2026-03-07T13:20:00.058Z",
+  "tables": {
+    "daily_reconciliations": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "reconciliation_date",
+          "type": "date",
+          "comment": "对账日期",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "comment": "对账状态",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "total_orders",
+          "type": "int",
+          "comment": "总订单数",
+          "nullable": "YES",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "reconciled_orders",
+          "type": "int",
+          "comment": "已对账订单数",
+          "nullable": "YES",
+          "position": 5,
+          "pk": false
+        },
+        {
+          "name": "total_amount",
+          "type": "int",
+          "comment": "总金额(分)",
+          "nullable": "YES",
+          "position": 6,
+          "pk": false
+        },
+        {
+          "name": "reconciled_amount",
+          "type": "int",
+          "comment": "已对账金额(分)",
+          "nullable": "YES",
+          "position": 7,
+          "pk": false
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "comment": "创建时间",
+          "nullable": "YES",
+          "position": 8,
+          "pk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "comment": "更新时间",
+          "nullable": "YES",
+          "position": 9,
+          "pk": false
+        },
+        {
+          "name": "operator",
+          "type": "varchar",
+          "comment": "操作人",
+          "nullable": "YES",
+          "position": 10,
+          "pk": false
+        },
+        {
+          "name": "remark",
+          "type": "varchar",
+          "comment": "备注",
+          "nullable": "YES",
+          "position": 11,
+          "pk": false
+        }
+      ]
+    },
+    "payment_temps": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "reconciliation_date",
+          "type": "date",
+          "comment": "对账日期（数据隔离）",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "payment_id",
+          "type": "varchar",
+          "comment": "Adapay支付ID",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "order_no",
+          "type": "varchar",
+          "comment": "订单号（商城outer_pay_id）",
+          "nullable": "NO",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "pay_amt",
+          "type": "decimal",
+          "comment": "支付金额(元)",
+          "nullable": "YES",
+          "position": 5,
+          "pk": false
+        },
+        {
+          "name": "status",
+          "type": "varchar",
+          "comment": "支付状态",
+          "nullable": "YES",
+          "position": 6,
+          "pk": false
+        },
+        {
+          "name": "created_time",
+          "type": "varchar",
+          "comment": "支付创建时间",
+          "nullable": "YES",
+          "position": 7,
+          "pk": false
+        },
+        {
+          "name": "payment_confirms",
+          "type": "text",
+          "comment": "分账确认信息（JSON数组）",
+          "nullable": "YES",
+          "position": 8,
+          "pk": false
+        }
+      ]
+    },
+    "reconciliation_details": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "reconciliation_date",
+          "type": "date",
+          "comment": "对账日期",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "order_num",
+          "type": "varchar",
+          "comment": "商城订单号",
+          "nullable": "YES",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "order_code",
+          "type": "varchar",
+          "comment": "订单编号(code)",
+          "nullable": "YES",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "order_amount",
+          "type": "decimal",
+          "comment": "订单金额(元)",
+          "nullable": "YES",
+          "position": 5,
+          "pk": false
+        },
+        {
+          "name": "order_pay_time",
+          "type": "varchar",
+          "comment": "订单支付时间",
+          "nullable": "YES",
+          "position": 6,
+          "pk": false
+        },
+        {
+          "name": "order_state",
+          "type": "int",
+          "comment": "订单状态",
+          "nullable": "YES",
+          "position": 7,
+          "pk": false
+        },
+        {
+          "name": "payment_id",
+          "type": "varchar",
+          "comment": "Adapay支付ID",
+          "nullable": "YES",
+          "position": 8,
+          "pk": false
+        },
+        {
+          "name": "payment_order_no",
+          "type": "varchar",
+          "comment": "Adapay订单号",
+          "nullable": "YES",
+          "position": 9,
+          "pk": false
+        },
+        {
+          "name": "payment_amount",
+          "type": "decimal",
+          "comment": "支付金额(元)",
+          "nullable": "YES",
+          "position": 10,
+          "pk": false
+        },
+        {
+          "name": "payment_time",
+          "type": "varchar",
+          "comment": "支付时间",
+          "nullable": "YES",
+          "position": 11,
+          "pk": false
+        },
+        {
+          "name": "confirmed_amount",
+          "type": "decimal",
+          "comment": "分账确认总金额(元)",
+          "nullable": "YES",
+          "position": 12,
+          "pk": false
+        },
+        {
+          "name": "is_confirm_complete",
+          "type": "varchar",
+          "comment": "分账确认是否完成(Y/N)",
+          "nullable": "YES",
+          "position": 13,
+          "pk": false
+        },
+        {
+          "name": "result",
+          "type": "enum",
+          "comment": "对账结果",
+          "nullable": "NO",
+          "position": 14,
+          "pk": false
+        },
+        {
+          "name": "difference",
+          "type": "decimal",
+          "comment": "差异金额(元)",
+          "nullable": "YES",
+          "position": 15,
+          "pk": false
+        },
+        {
+          "name": "remark",
+          "type": "varchar",
+          "comment": "备注",
+          "nullable": "YES",
+          "position": 16,
+          "pk": false
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "comment": "创建时间",
+          "nullable": "YES",
+          "position": 17,
+          "pk": false
+        }
+      ]
+    },
+    "t_daily_shop_explore": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "store_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "openid",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "log_time",
+          "type": "datetime",
+          "comment": "",
+          "nullable": "NO",
+          "position": 4,
+          "pk": false
+        }
+      ]
+    },
+    "t_food_info": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "order_count",
+          "type": "int",
+          "comment": "",
+          "nullable": "YES",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "price",
+          "type": "decimal",
+          "comment": "",
+          "nullable": "YES",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "name",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "update_date",
+          "type": "date",
+          "comment": "",
+          "nullable": "NO",
+          "position": 5,
+          "pk": false
+        },
+        {
+          "name": "shop_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 6,
+          "pk": false
+        },
+        {
+          "name": "daily_order_count",
+          "type": "int",
+          "comment": "",
+          "nullable": "YES",
+          "position": 7,
+          "pk": false
+        },
+        {
+          "name": "shop_name",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 8,
+          "pk": false
+        },
+        {
+          "name": "channel",
+          "type": "char",
+          "comment": "",
+          "nullable": "NO",
+          "position": 9,
+          "pk": false
+        }
+      ]
+    },
+    "t_food_info_20250401": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "order_count",
+          "type": "int",
+          "comment": "",
+          "nullable": "YES",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "price",
+          "type": "decimal",
+          "comment": "",
+          "nullable": "YES",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "name",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "update_date",
+          "type": "date",
+          "comment": "",
+          "nullable": "NO",
+          "position": 5,
+          "pk": false
+        },
+        {
+          "name": "shop_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 6,
+          "pk": false
+        },
+        {
+          "name": "daily_order_count",
+          "type": "int",
+          "comment": "",
+          "nullable": "YES",
+          "position": 7,
+          "pk": false
+        },
+        {
+          "name": "shop_name",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 8,
+          "pk": false
+        },
+        {
+          "name": "channel",
+          "type": "char",
+          "comment": "",
+          "nullable": "NO",
+          "position": 9,
+          "pk": false
+        }
+      ]
+    },
+    "t_holun_collect": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "openid",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "store_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "collection_time",
+          "type": "datetime",
+          "comment": "",
+          "nullable": "NO",
+          "position": 4,
+          "pk": false
+        }
+      ]
+    },
+    "t_holun_order": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "order_time",
+          "type": "datetime",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "openid",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "store_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "money",
+          "type": "decimal",
+          "comment": "",
+          "nullable": "NO",
+          "position": 5,
+          "pk": false
+        }
+      ]
+    },
+    "t_holun_store_info": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "region_code",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "name",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "in_newlist",
+          "type": "tinyint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "tag_ids",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 5,
+          "pk": false
+        }
+      ]
+    },
+    "t_search_keyword": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "search_date",
+          "type": "date",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "keyword",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "comment": "",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "machine_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "default": "DEFAULT",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "region_code",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 5,
+          "pk": false
+        }
+      ]
+    },
+    "t_shop_expose": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "shop_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "expose_date",
+          "type": "date",
+          "comment": "",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "openid",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "machine_id",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "YES",
+          "default": "DEFAULT",
+          "position": 5,
+          "pk": false
+        },
+        {
+          "name": "region_code",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "default": "UNKNOWN",
+          "position": 6,
+          "pk": false
+        }
+      ]
+    },
+    "t_user_store_score": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "store_id",
+          "type": "bigint",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        },
+        {
+          "name": "openid",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 3,
+          "pk": false
+        },
+        {
+          "name": "expose_score",
+          "type": "float",
+          "comment": "",
+          "nullable": "YES",
+          "default": "0",
+          "position": 4,
+          "pk": false
+        },
+        {
+          "name": "view_score",
+          "type": "float",
+          "comment": "",
+          "nullable": "YES",
+          "default": "0",
+          "position": 5,
+          "pk": false
+        },
+        {
+          "name": "order_score",
+          "type": "float",
+          "comment": "",
+          "nullable": "YES",
+          "default": "0",
+          "position": 6,
+          "pk": false
+        },
+        {
+          "name": "collect_score",
+          "type": "float",
+          "comment": "",
+          "nullable": "YES",
+          "default": "0",
+          "position": 7,
+          "pk": false
+        },
+        {
+          "name": "total_score",
+          "type": "float",
+          "comment": "",
+          "nullable": "YES",
+          "default": "0",
+          "position": 8,
+          "pk": false
+        },
+        {
+          "name": "final_score",
+          "type": "float",
+          "comment": "",
+          "nullable": "YES",
+          "default": "0",
+          "position": 9,
+          "pk": false
+        },
+        {
+          "name": "region_code",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 10,
+          "pk": false
+        }
+      ]
+    },
+    "t_user_top_stores": {
+      "comment": "",
+      "columns": [
+        {
+          "name": "openid",
+          "type": "varchar",
+          "comment": "",
+          "nullable": "NO",
+          "position": 1,
+          "pk": false
+        },
+        {
+          "name": "top20_store_ids",
+          "type": "text",
+          "comment": "",
+          "nullable": "NO",
+          "position": 2,
+          "pk": false
+        }
+      ]
+    }
+  },
+  "relations": [],
+  "enums": {
+    "daily_reconciliations": {},
+    "payment_temps": {},
+    "reconciliation_details": {},
+    "t_daily_shop_explore": {},
+    "t_food_info": {},
+    "t_food_info_20250401": {},
+    "t_holun_collect": {},
+    "t_holun_order": {},
+    "t_holun_store_info": {},
+    "t_search_keyword": {},
+    "t_shop_expose": {},
+    "t_user_store_score": {},
+    "t_user_top_stores": {}
+  }
+}

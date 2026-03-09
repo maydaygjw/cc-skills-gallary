@@ -1,0 +1,84 @@
+# Universal DB Query Skill V2 配置文件
+# 将此文件复制到以下位置之一：
+#   1. 项目根目录 .claude/udq-config.yaml（推荐）
+#   2. 项目根目录 .claude/skills-conf/udq/udq-config.yaml
+#   3. 用户家目录 ~/.claude/udq-config.yaml
+#   4. 用户家目录 ~/.claude/skills-conf/udq/udq-config.yaml
+
+# 数据库连接配置
+database:
+  # 数据库类型: mysql, postgresql, sqlite
+  type: mysql
+
+  # MySQL / PostgreSQL 配置
+  host: localhost
+  port: 3306
+  user: your_username
+  password: your_password
+  database: your_database_name
+
+  # SSL 配置（可选）
+  # ssl: false
+
+  # SQLite 配置（当 type 为 sqlite 时）
+  # database: ./path/to/database.db
+
+# Skill 行为配置（可选）
+options:
+  # 启用 Schema 缓存（推荐开启，加快后续查询）
+  cache_enabled: true
+
+  # 缓存有效期（小时）
+  # 设置为 0 表示缓存永久有效，除非用户手动刷新
+  cache_ttl_hours: 24
+
+  # 最大返回行数（防止大表全表扫描）
+  max_query_results: 1000
+
+  # 只读模式（推荐开启，防止误操作）
+  # 开启后只允许 SELECT/SHOW/DESCRIBE/EXPLAIN
+  readonly_mode: true
+
+  # 枚举值采样行数（用于推断字段可能的取值）
+  sample_size: 100
+
+  # 表过滤配置（可选）
+  # 用于限制只允许查询特定表，支持白名单或黑名单模式
+  table_filter:
+    # 过滤模式: whitelist(白名单) 或 blacklist(黑名单)
+    # whitelist: 只允许查询 listed_tables 中的表
+    # blacklist: 允许查询除 listed_tables 外的所有表
+    mode: whitelist
+
+    # 表列表（根据 mode 决定是允许还是禁止）
+    listed_tables:
+      - users
+      - orders
+      - products
+
+    # 通配符模式（可选）
+    # 支持 * 通配符，例如 "log_*" 匹配所有 log_ 开头的表
+    patterns:
+      - "temp_*"
+      - "*_backup"
+
+  # 注释覆盖配置（可选）
+  # 用于补充或覆盖数据库中的表/字段注释
+  # 当数据库缺少注释时，可以在此配置
+  comments:
+    # 表级别注释
+    tables:
+      users: "用户表 - 存储注册用户基本信息"
+      orders: "订单表 - 存储用户订单数据"
+      products: "商品表 - 存储商品信息"
+
+    # 字段级别注释
+    # 格式: 表名.字段名: 注释
+    columns:
+      "users.id": "用户唯一标识ID"
+      "users.name": "用户昵称"
+      "users.email": "用户邮箱地址"
+      "users.status": "用户状态：1正常 2禁用 3删除"
+      "orders.id": "订单ID"
+      "orders.user_id": "关联用户ID"
+      "orders.state": "订单状态：1待付款 2已付款 3已发货 4已完成"

@@ -9,12 +9,13 @@ This is a **Claude Code Skills Gallery** - a collection of reusable skills that 
 ## Repository Structure
 
 ```
-├── marp-slide-maker/     # Create Marp presentation slides from Markdown
-├── mermaid-design/       # Generate Mermaid diagrams for documentation
-├── universal-db-query/   # Database query skill with metadata discovery
-└── .claude/              # Claude Code configuration
+├── marp-slide-maker/          # Create Marp presentation slides from Markdown
+├── mermaid-design/            # Generate Mermaid diagrams for documentation
+├── universal-db-query/        # Database query skill with MCP (DBHub)
+├── universal-db-query-v2/     # Database query skill - Standalone (no MCP)
+└── .claude/                   # Claude Code configuration
     ├── settings.local.json
-    └── skills/           # Installed skills (auto-generated)
+    └── skills/                # Installed skills (auto-generated)
 ```
 
 ## Skill Architecture
@@ -73,7 +74,7 @@ Generates Mermaid diagrams for system architecture, workflows, and technical doc
 
 ### universal-db-query
 
-Intelligent database query skill with automatic metadata discovery.
+Intelligent database query skill with automatic metadata discovery (requires DBHub MCP).
 
 **Key Files:**
 - `SKILL.md` - Skill implementation guide
@@ -86,6 +87,33 @@ Intelligent database query skill with automatic metadata discovery.
 database:
   mcp_server: DBHub
   schema: your_database
+```
+
+### universal-db-query-v2
+
+Standalone database query skill - direct connection without MCP server. Supports MySQL, PostgreSQL, SQLite.
+
+**Key Scripts:**
+- `node scripts/query.js "<sql>"` - Execute SQL queries
+- `node scripts/discover-schema.js [--refresh]` - Discover and cache schema
+- `node scripts/list-tables.js` - List all tables
+- `node scripts/describe-table.js <table>` - Show table structure
+- `node scripts/run-pattern.js <pattern>` - Run SQL patterns
+- `npm install` - Install dependencies (mysql2, pg, better-sqlite3)
+
+**Configuration:** Requires `./udq-config.yaml` in target project:
+```yaml
+database:
+  type: mysql|postgresql|sqlite
+  host: localhost
+  port: 3306
+  user: username
+  password: password
+  database: db_name
+
+options:
+  readonly_mode: true
+  cache_enabled: true
 ```
 
 ## Skill Development
@@ -133,6 +161,23 @@ description: Clear description of what the skill does
 ```bash
 node marp-slide-maker/validate-skill.js
 node mermaid-design/validate-skill.js
+node universal-db-query-v2/validate-skill.js
+```
+
+### Universal DB Query V2 (Standalone)
+```bash
+# Setup
+cd universal-db-query-v2 && npm install
+
+# Configure
+cp templates/config.yaml ./udq-config.yaml  # Edit with your DB settings
+
+# Usage
+node scripts/discover-schema.js              # Cache schema
+node scripts/list-tables.js                  # List tables
+node scripts/describe-table.js orders        # Describe table
+node scripts/query.js "SELECT * FROM orders LIMIT 10"
+node scripts/run-pattern.js daily-report     # Run pattern
 ```
 
 ### Generate Marp Slides
