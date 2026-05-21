@@ -104,7 +104,7 @@ function stripOpencodeOutput(raw) {
   return result.join('\n');
 }
 
-function runOpencode(filePath) {
+function runOpencodeChunk(content, chunkIndex, totalChunks) {
   const prompt = 'Output the following code/content EXACTLY as-is. Do not add markdown formatting, explanations, or any modifications. Just output the raw content:';
 
   return new Promise((resolve, reject) => {
@@ -130,14 +130,36 @@ function runOpencode(filePath) {
       reject(new Error(`Failed to run opencode: ${err.message}`));
     });
 
-    // Pipe file content to stdin
-    const fileStream = fs.createReadStream(filePath);
-    fileStream.pipe(child.stdin);
-    fileStream.on('error', (err) => {
-      child.stdin.end();
-      reject(new Error(`Failed to read file: ${err.message}`));
-    });
+    // Write content to stdin
+    child.stdin.write(content);
+    child.stdin.end();
   });
+}
+
+async function runOpencode(filePath) {
+  const content = fs.readFileSync(filePath, 'utf8');
+  const lines = content.split('\n');
+
+  if (lines.length <= 500) {
+    return await runOpencodeChunk(content, 1, 1);
+  }
+
+  // Large file: process in 500-line chunks
+  const chunks = [];
+  for (let i = 0; i < lines.length; i += 500) {
+    chunks.push(lines.slice(i, i + 500).join('\n'));
+  }
+
+  const outputs = [];
+  for (let i = 0; i < chunks.length; i++) {
+    if (chunks.length > 1) {
+      console.log(`    chunk ${i + 1}/${chunks.length} (${chunks[i].split('\n').length} lines)...`);
+    }
+    const output = await runOpencodeChunk(chunks[i], i + 1, chunks.length);
+    outputs.push(output);
+  }
+
+  return outputs.join('\n');
 }
 
 async function processFiles(files, options) {
