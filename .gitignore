@@ -1,5 +1,5 @@
-# Claude Code 临时测试 skills
-# .claude/skills/*
+# Claude Code 配置和技能
+.claude/
 
 # Node.js 依赖
 node_modules/
